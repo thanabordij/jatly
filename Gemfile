@@ -40,3 +40,8 @@ gem 'spring',        group: :development
 
 gem 'react-rails', '~>1.0'
 gem 'devise'
+
+group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-nav'
+end
