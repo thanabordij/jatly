@@ -2,18 +2,21 @@
   handleChange: (e) ->
     name = e.target.name
     @setState "#{ name }": e.target.value
+
   valid: ->
     @state.email && @state.password
+
   handleSubmit: (e) ->
     e.preventDefault()
     $.post '/users/sign_in.json', { user: @state }, (data) =>
-      debugger;
-      @setState @getInitialState()
+      @props.setUser data
     , 'JSON'
+
   getInitialState: ->
     email: ''
     password: ''
     remember_me: 1
+
   render: ->
     React.DOM.form
       className: 'form-inline'
