@@ -7,7 +7,7 @@
       type: 'delete'
       data: { }
       success: (data) =>
-        debugger;
+        @props.setUser data
       dataType: "json"
 
   render: ->

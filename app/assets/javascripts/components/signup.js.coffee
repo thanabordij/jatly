@@ -1,28 +1,31 @@
-@Login = React.createClass
+@Signup = React.createClass
   handleChange: (e) ->
     name = e.target.name
     @setState "#{ name }": e.target.value
 
   valid: ->
-    @state.email && @state.password
+    @state.email && @state.password && (@state.password == @state.password_confirmation)
 
   handleSubmit: (e) ->
     e.preventDefault()
     $.ajax
-      url: "/users/sign_in.json"
+      url: "/users.json"
       type: "post"
       data: { user: @state }
       dataType: "json"
       success: (data) =>
         @props.setUser data
       error: (data) =>
-        error = [data.responseJSON.error]
-        @props.handleErrorResponse error
+        errors = []
+        for key, value of data.responseJSON.errors
+          err_msg = key + " " + value.toString()
+          errors.push(err_msg)
+        @props.handleErrorResponse errors
 
   getInitialState: ->
     email: ''
     password: ''
-    remember_me: 1
+    password_confirmation: ''
 
   render: ->
     React.DOM.form
@@ -46,8 +49,17 @@
           name: 'password'
           value: @state.password
           onChange: @handleChange
+      React.DOM.div
+        className: 'form-group'
+        React.DOM.input
+          type: 'password'
+          className: 'form-control'
+          placeholder: 'Password Confirmation'
+          name: 'password_confirmation'
+          value: @state.password_confirmation
+          onChange: @handleChange
       React.DOM.button
         type: 'submit'
         className: 'btn btn-primary'
         disabled: !@valid()
-        'Login'
+        'Signup'
