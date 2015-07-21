@@ -1,4 +1,9 @@
 @Signup = React.createClass
+  getInitialState: ->
+    email: ''
+    password: ''
+    password_confirmation: ''
+
   handleChange: (e) ->
     name = e.target.name
     @setState "#{ name }": e.target.value
@@ -22,14 +27,9 @@
           errors.push(err_msg)
         @props.handleErrorResponse errors
 
-  getInitialState: ->
-    email: ''
-    password: ''
-    password_confirmation: ''
-
   render: ->
     React.DOM.form
-      className: 'form-inline'
+      className: 'form-signup'
       onSubmit: @handleSubmit
       React.DOM.div
         className: 'form-group'
@@ -63,3 +63,5 @@
         className: 'btn btn-primary'
         disabled: !@valid()
         'Signup'
+
+
