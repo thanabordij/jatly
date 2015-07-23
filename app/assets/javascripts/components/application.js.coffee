@@ -15,13 +15,17 @@
     @setState showLogin: !@state.showLogin
 
   showSuccessfulLogin: ->
-    React.DOM.div null,
-      React.DOM.p null, 'logged in successful'
+    React.DOM.div
+      className: 'login-signup-container'
+      React.DOM.h3 null, 'Hello World'
       React.createElement Logout, setUser: @setUserSession
 
   showLoginSignupForm: ->
     React.DOM.div
       className: 'login-signup-container'
+      React.DOM.h1
+        className: 'app-title'
+        'Welcome'
       if !@state.showLogin
         switchText = 'Signup'
         React.createElement Login, setUser: @setUserSession, handleErrorResponse: @setErrors
@@ -34,24 +38,26 @@
         onClick: @toggleLogin
         "Click here to #{ switchText }"
 
+  showPrettyLoginWall: ->
+    React.DOM.div
+      className: 'container'
+      React.DOM.div
+        className: 'row'
+        React.DOM.div
+          className: 'col-md-4 col-md-offset-4'
+          React.DOM.div
+            className: 'account-wall'
+            if @state.userSession
+              @showSuccessfulLogin()
+            else
+              @showLoginSignupForm()
+
   render: ->
     React.DOM.div
       className: 'application-wrapper'
       if @state.errorMessages.length > 0
         @displayErrors()
-
-      React.DOM.div
-        className: 'container'
-        React.DOM.div
-          className: 'row'
-          React.DOM.div
-            className: 'col-md-4 col-md-offset-4'
-            React.DOM.div
-              className: 'account-wall'
-              if @state.userSession
-                @showSuccessfulLogin()
-              else
-                @showLoginSignupForm()
+      @showPrettyLoginWall()
 
   displayErrors: ->
     i = 0
