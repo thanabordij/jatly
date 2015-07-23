@@ -29,7 +29,6 @@
 
   render: ->
     React.DOM.form
-      className: 'form-signup'
       onSubmit: @handleSubmit
       React.DOM.div
         className: 'form-group'
@@ -60,7 +59,7 @@
           onChange: @handleChange
       React.DOM.button
         type: 'submit'
-        className: 'btn btn-primary'
+        className: 'btn btn-primary btn-block'
         disabled: !@valid()
         'Signup'
 

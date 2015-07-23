@@ -11,9 +11,8 @@
   setErrors: (errors) ->
     @setState errorMessages: errors
 
-  toggleLogin: (e) ->
+  toggleLogin: ->
     @setState showLogin: !@state.showLogin
-    e.preventDefault()
 
   showSuccessfulLogin: ->
     React.DOM.div null,
@@ -29,13 +28,11 @@
       else
         switchText = 'Login'
         React.createElement Signup, setUser: @setUserSession, handleErrorResponse: @setErrors
-      React.DOM.form
-        className: 'form-inline'
-        onSubmit: @toggleLogin
-        React.DOM.button
-          type: 'submit'
-          className: 'btn btn-primary'
-          "Click here to #{ switchText }"
+      React.DOM.button
+        className: 'btn btn-primary btn-block'
+        id: 'toggle-login-signup-btn'
+        onClick: @toggleLogin
+        "Click here to #{ switchText }"
 
   render: ->
     React.DOM.div
@@ -44,22 +41,17 @@
         @displayErrors()
 
       React.DOM.div
-        className: 'login-wrapper'
+        className: 'container'
         React.DOM.div
-          className: 'container'
+          className: 'row'
           React.DOM.div
-            className: 'row'
-            id: 'login-container'
+            className: 'col-md-4 col-md-offset-4'
             React.DOM.div
-              className: 'col-sm-6 col-md-4 col-md-offset-4'
-              React.DOM.div
-                className: 'panel panel-default'
-                React.DOM.div
-                  className: 'panel-body'
-                  if @state.userSession
-                    @showSuccessfulLogin()
-                  else
-                    @showLoginSignupForm()
+              className: 'account-wall'
+              if @state.userSession
+                @showSuccessfulLogin()
+              else
+                @showLoginSignupForm()
 
   displayErrors: ->
     i = 0
