@@ -46,7 +46,7 @@
         React.DOM.div
           className: 'col-md-4 col-md-offset-4'
           React.DOM.div
-            className: 'account-wall'
+            className: 'login-wall'
             if @state.userSession
               @showSuccessfulLogin()
             else
