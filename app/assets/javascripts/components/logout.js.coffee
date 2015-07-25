@@ -12,9 +12,9 @@
 
   render: ->
     React.DOM.form
-      className: 'form-inline'
+      className: 'form'
       onSubmit: @handleSubmit
       React.DOM.button
         type: 'submit'
-        className: 'btn btn-primary'
+        className: 'btn btn-primary btn-block'
         'Logout'
