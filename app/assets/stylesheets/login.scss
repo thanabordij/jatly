@@ -30,12 +30,3 @@
   opacity: 1;
   transition: opacity .5s ease-in;
 }
-
-.login-transition-leave {
-  opacity: 1;
-}
-
-.login-transition-leave.login-transition-leave-active {
-  opacity: 0.01;
-  transition: opacity .5s;
-}

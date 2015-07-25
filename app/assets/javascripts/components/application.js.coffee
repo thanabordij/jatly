@@ -1,11 +1,11 @@
 @Application = React.createClass
   getInitialState: ->
-    userSession: Cookies.get('signed_in') == '1'
+    isSignedIn: Cookies.get('signed_in') == '1'
     errorMessages: []
-    showLogin: false
+    showLoginPanel: true
 
   setUserSession: (data) ->
-    @state.userSession = !@state.userSession
+    @state.isSignedIn = !@state.isSignedIn
     @setState errorMessages: []
 
   setErrors: (errors) ->
@@ -16,7 +16,7 @@
 
   toggleLogin: (e) ->
     e.preventDefault()
-    @setState showLogin: !@state.showLogin
+    @setState showLoginPanel: !@state.showLoginPanel
 
   showSuccessfulLogin: ->
     React.DOM.div
@@ -33,14 +33,15 @@
       React.createFactory(React.addons.CSSTransitionGroup)
         transitionName: 'login-transition'
         transitionLeave: false
-        if !@state.showLogin
-          switchText = 'Signup'
-          urlText = '/users/sign_up'
-          React.createElement Login, key: 10, setUser: @setUserSession, handleErrorResponse: @setErrors
-        else
+        if @state.showLoginPanel
           switchText = 'Login'
           urlText = '/users/sign_in'
           React.createElement Signup, key: 11, setUser: @setUserSession, handleErrorResponse: @setErrors
+        else
+          switchText = 'Signup'
+          urlText = '/users/sign_up'
+          React.createElement Login, key: 10, setUser: @setUserSession, handleErrorResponse: @setErrors
+
       @handleUrl(urlText)
       React.DOM.a
         className: 'btn btn-danger btn-block'
@@ -58,7 +59,7 @@
           className: 'col-md-4 col-md-offset-4'
           React.DOM.div
             className: 'login-wall'
-            if @state.userSession
+            if @state.isSignedIn
               @showSuccessfulLogin()
             else
               @showLoginSignupForm()
