@@ -1,4 +1,9 @@
 @Login = React.createClass
+  getInitialState: ->
+    email: ''
+    password: ''
+    remember_me: 1
+
   handleChange: (e) ->
     name = e.target.name
     @setState "#{ name }": e.target.value
@@ -19,14 +24,8 @@
         error = [data.responseJSON.error]
         @props.handleErrorResponse error
 
-  getInitialState: ->
-    email: ''
-    password: ''
-    remember_me: 1
-
   render: ->
     React.DOM.form
-      className: 'form-inline'
       onSubmit: @handleSubmit
       React.DOM.div
         className: 'form-group'
@@ -48,6 +47,6 @@
           onChange: @handleChange
       React.DOM.button
         type: 'submit'
-        className: 'btn btn-primary'
+        className: 'btn btn-primary btn-block'
         disabled: !@valid()
         'Login'
