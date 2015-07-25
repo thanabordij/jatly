@@ -2,7 +2,7 @@
   getInitialState: ->
     isSignedIn: Cookies.get('signed_in') == '1'
     errorMessages: []
-    showLoginPanel: true
+    showLoginPanel: @props.current_path == 'login'
 
   setUserSession: (data) ->
     @state.isSignedIn = !@state.isSignedIn
@@ -34,13 +34,13 @@
         transitionName: 'login-transition'
         transitionLeave: false
         if @state.showLoginPanel
-          switchText = 'Login'
-          urlText = '/users/sign_in'
-          React.createElement Signup, key: 11, setUser: @setUserSession, handleErrorResponse: @setErrors
-        else
           switchText = 'Signup'
+          urlText = '/users/sign_in'
+          React.createElement Login, key: 11, setUser: @setUserSession, handleErrorResponse: @setErrors
+        else
+          switchText = 'Login'
           urlText = '/users/sign_up'
-          React.createElement Login, key: 10, setUser: @setUserSession, handleErrorResponse: @setErrors
+          React.createElement Signup, key: 10, setUser: @setUserSession, handleErrorResponse: @setErrors
 
       @handleUrl(urlText)
       React.DOM.a
