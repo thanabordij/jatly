@@ -11,13 +11,11 @@
   setErrors: (errors) ->
     @setState errorMessages: errors
 
-  handleUrl: (e) ->
-    e.preventDefault()
-    newUrl = e.target.getAttribute('value')
+  handleUrl: (newUrl) ->
     history.pushState(null, null, newUrl)
 
   toggleLogin: (e) ->
-    @handleUrl(e)
+    e.preventDefault()
     @setState showLogin: !@state.showLogin
 
   showSuccessfulLogin: ->
@@ -43,11 +41,11 @@
           switchText = 'Login'
           urlText = '/users/sign_in'
           React.createElement Signup, key: 11, setUser: @setUserSession, handleErrorResponse: @setErrors
+      @handleUrl(urlText)
       React.DOM.a
         className: 'btn btn-danger btn-block'
         id: 'toggle-login-signup-btn'
         href: urlText
-        value: urlText
         onClick: @toggleLogin
         "Click here to #{ switchText }"
 
