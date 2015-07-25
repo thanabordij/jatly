@@ -26,12 +26,15 @@
       React.DOM.h1
         className: 'app-title'
         'Welcome'
-      if !@state.showLogin
-        switchText = 'Signup'
-        React.createElement Login, setUser: @setUserSession, handleErrorResponse: @setErrors
-      else
-        switchText = 'Login'
-        React.createElement Signup, setUser: @setUserSession, handleErrorResponse: @setErrors
+      React.createFactory(React.addons.CSSTransitionGroup)
+        transitionName: 'login-transition'
+        transitionLeave: false
+        if !@state.showLogin
+          switchText = 'Signup'
+          React.createElement Login, key: 10, setUser: @setUserSession, handleErrorResponse: @setErrors
+        else
+          switchText = 'Login'
+          React.createElement Signup, key: 11, setUser: @setUserSession, handleErrorResponse: @setErrors
       React.DOM.button
         className: 'btn btn-primary btn-block'
         id: 'toggle-login-signup-btn'
