@@ -1,4 +1,4 @@
-@Application = React.createClass
+@LandingPage = React.createClass
   getInitialState: ->
     isSignedIn: Cookies.get('signed_in') == '1'
     errorMessages: []
