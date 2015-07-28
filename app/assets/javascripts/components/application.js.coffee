@@ -11,7 +11,7 @@
   setErrors: (errors) ->
     @setState errorMessages: errors
 
-  changeURLtoMatchPanel: (newUrl) ->
+  handleUrl: (newUrl) ->
     history.pushState(null, null, newUrl)
 
   toggleLogin: (e) ->
@@ -20,7 +20,7 @@
 
   showSuccessfulLogin: ->
     React.DOM.div
-      className: 'application-user-session'
+      className: 'login-signup-container'
       React.DOM.h3 null, 'Hello World'
       React.createElement Logout, setUser: @setUserSession
 
@@ -42,7 +42,7 @@
           urlText = '/users/sign_up'
           React.createElement Signup, key: "signup".hashCode(), setUser: @setUserSession, handleErrorResponse: @setErrors
 
-      @changeURLtoMatchPanel(urlText)
+      @handleUrl(urlText)
       React.DOM.a
         className: 'btn btn-danger btn-block'
         id: 'toggle-login-signup-btn'
@@ -51,17 +51,17 @@
         "Click here to #{ switchText }"
 
   showPrettyLoginWall: ->
-    if @state.isSignedIn
-      @showSuccessfulLogin()
-    else
+    React.DOM.div
+      className: 'container'
       React.DOM.div
-        className: 'container'
+        className: 'row'
         React.DOM.div
-          className: 'row'
+          className: 'col-md-4 col-md-offset-4'
           React.DOM.div
-            className: 'col-md-4 col-md-offset-4'
-            React.DOM.div
-              className: 'login-wall'
+            className: 'login-wall'
+            if @state.isSignedIn
+              @showSuccessfulLogin()
+            else
               @showLoginSignupForm()
 
   render: ->
