@@ -11,7 +11,7 @@
   setErrors: (errors) ->
     @setState errorMessages: errors
 
-  handleUrl: (newUrl) ->
+  changeURLtoMatchPanel: (newUrl) ->
     history.pushState(null, null, newUrl)
 
   toggleLogin: (e) ->
@@ -20,7 +20,7 @@
 
   showSuccessfulLogin: ->
     React.DOM.div
-      className: 'login-signup-container'
+      className: 'application-user-session'
       React.DOM.h3 null, 'Hello World'
       React.createElement Logout, setUser: @setUserSession
 
@@ -36,13 +36,13 @@
         if @state.showLoginPanel
           switchText = 'Signup'
           urlText = '/users/sign_in'
-          React.createElement Login, key: 11, setUser: @setUserSession, handleErrorResponse: @setErrors
+          React.createElement Login, key: "login".hashCode(), setUser: @setUserSession, handleErrorResponse: @setErrors
         else
           switchText = 'Login'
           urlText = '/users/sign_up'
-          React.createElement Signup, key: 10, setUser: @setUserSession, handleErrorResponse: @setErrors
+          React.createElement Signup, key: "signup".hashCode(), setUser: @setUserSession, handleErrorResponse: @setErrors
 
-      @handleUrl(urlText)
+      @changeURLtoMatchPanel(urlText)
       React.DOM.a
         className: 'btn btn-danger btn-block'
         id: 'toggle-login-signup-btn'
@@ -51,17 +51,17 @@
         "Click here to #{ switchText }"
 
   showPrettyLoginWall: ->
-    React.DOM.div
-      className: 'container'
+    if @state.isSignedIn
+      @showSuccessfulLogin()
+    else
       React.DOM.div
-        className: 'row'
+        className: 'container'
         React.DOM.div
-          className: 'col-md-4 col-md-offset-4'
+          className: 'row'
           React.DOM.div
-            className: 'login-wall'
-            if @state.isSignedIn
-              @showSuccessfulLogin()
-            else
+            className: 'col-md-4 col-md-offset-4'
+            React.DOM.div
+              className: 'login-wall'
               @showLoginSignupForm()
 
   render: ->
@@ -72,6 +72,5 @@
       @showPrettyLoginWall()
 
   displayErrors: ->
-    i = 0
     for message in @state.errorMessages
-      React.createElement AlertBox, key: i++, type: "danger", message: message
+      React.createElement AlertBox, key: message.hashCode(), type: "danger", message: message
