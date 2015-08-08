@@ -36,11 +36,11 @@
         if @state.showLoginPanel
           switchText = 'Signup'
           urlText = '/users/sign_in'
-          React.createElement Login, key: 11, setUser: @setUserSession, handleErrorResponse: @setErrors
+          React.createElement Login, key: "login".hashCode(), setUser: @setUserSession, handleErrorResponse: @setErrors
         else
           switchText = 'Login'
           urlText = '/users/sign_up'
-          React.createElement Signup, key: 10, setUser: @setUserSession, handleErrorResponse: @setErrors
+          React.createElement Signup, key: "signup".hashCode(), setUser: @setUserSession, handleErrorResponse: @setErrors
 
       @handleUrl(urlText)
       React.DOM.a
@@ -72,6 +72,5 @@
       @showPrettyLoginWall()
 
   displayErrors: ->
-    i = 0
     for message in @state.errorMessages
-      React.createElement AlertBox, key: i++, type: "danger", message: message
+      React.createElement AlertBox, key: message.hashCode(), type: "danger", message: message
